@@ -30,7 +30,12 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ],
-    "rules": {},
+    "rules": {
+      "import/extensions": "off",
+      "no-plusplus": "off",
+      "global-require": "off",
+      "import/no-dynamic-require": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

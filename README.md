@@ -1,4 +1,4 @@
-# memory-game
+# Memory Game
 
 ## Project setup
 ```

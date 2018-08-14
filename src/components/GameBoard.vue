@@ -5,20 +5,38 @@
         <img :src="cell">
       </div>
     </div>
+
+    <Modal v-if="isModal" @start="shuffle" >
+      <GetStarted />
+    </Modal>
   </div>
 </template>
 
 <script>
-export default {
+import shuffle from 'lodash/shuffle';
+import Modal from './Modal';
+import GetStarted from './GetStarted';
 
+export default {
+  components: {
+    Modal,
+    GetStarted,
+  },
   data: () => ({
     cells: [],
+    isModal: true,
   }),
   methods: {
     genCards() {
       for (let i = 0; i < 18; i++) {
         this.cells.push(require(`@/assets/img/image${i + 1}.jpg`));
       }
+    },
+
+    shuffle() {
+      this.cells = shuffle(this.cells);
+
+      this.isModal = false;
     },
   },
 

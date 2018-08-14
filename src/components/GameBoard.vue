@@ -6,8 +6,9 @@
       </div>
     </div>
 
-    <Modal v-if="isModal" @start="shuffle" >
-      <GetStarted />
+    <Modal v-if="isModalShown || isFinished" @start="restart">
+      <GetStarted v-if="!isFinished" />
+      <Finish v-else/>
     </Modal>
   </div>
 </template>
@@ -16,22 +17,38 @@
 import shuffle from 'lodash/shuffle';
 import Modal from './Modal';
 import GetStarted from './GetStarted';
+import Finish from './Finish';
 
 export default {
   components: {
     Modal,
+    Finish,
     GetStarted,
   },
   data: () => ({
+    countMoves: 0,
     cells: [],
-    isModal: true,
+    isModalShown: true,
     gameOff: false,
     openCards: [],
     selectedCards: [],
+    count: 3,
   }),
+  watch: {
+    isFinished(value) {
+      if (value) {
+        this.$emit('finish');
+      }
+    },
+  },
+  computed: {
+    isFinished() {
+      return this.openCards.length === this.cells.length;
+    },
+  },
   methods: {
     genCards() {
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < this.count; i++) {
         this.cells.push({
           url: require(`@/assets/img/image${i + 1}.jpg`),
           id: i,
@@ -39,14 +56,16 @@ export default {
       }
     },
 
-    shuffle() {
+    restart() {
       this.cells = shuffle(this.cells);
-
-      this.isModal = false;
+      this.isModalShown = false;
+      this.openCards = [];
+      this.countMoves = 0;
+      this.$emit('start');
     },
 
     isSelected(cell) {
-      return this.selectedCards.includes(cell) || this.openCards.includes(cell);
+      return this.selectedCards.includes(cell) || this.isOpenCard(cell);
     },
 
     selectCard(cell) {
@@ -60,6 +79,7 @@ export default {
 
       if (this.selectedCards.length === 2) {
         this.checkCards();
+        this.$emit('count', ++this.countMoves);
       }
     },
 

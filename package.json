@@ -31,10 +31,12 @@
       "@vue/airbnb"
     ],
     "rules": {
+      "radix": "off",
       "import/extensions": "off",
       "no-plusplus": "off",
       "global-require": "off",
-      "import/no-dynamic-require": "off"
+      "import/no-dynamic-require": "off",
+      "no-return-assign": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"

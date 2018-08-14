@@ -22,6 +22,7 @@
   bottom: 0;
   width: 100%;
   min-height: 100%;
+  border-radius: 10px;
   background-color: rgba(0, 0, 0, .2);
   transition: opacity .3s ease;
 }

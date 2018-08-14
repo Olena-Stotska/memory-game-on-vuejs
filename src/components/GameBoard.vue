@@ -32,7 +32,7 @@ export default {
     gameOff: false,
     openCards: [],
     selectedCards: [],
-    count: 3,
+    count: 18,
   }),
   watch: {
     isFinished(value) {
